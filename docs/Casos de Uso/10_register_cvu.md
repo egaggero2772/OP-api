@@ -26,10 +26,7 @@ Si bien la Plataforma OP permite manejar un ID de Cliente Externo (sería el ID 
 
 
 
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image1.png "image_tooltip")
+![](../../assets/images/proceso_register.png)
 
 
 **_ _**
@@ -219,14 +216,8 @@ A continuación, se detalla el patrón definido de manera conjunta entre OP y FT
 El mismo está basado en un esquema de reemplazo de variables y es configurado desde el backoffice de la plataforma y puede ser cambiado de acuerdo con la necesidad que se presente desde la opción administración de conectores para el correspondiente al BIND, tal como se muestra en la siguiente figura.:
 
 
+![](../../assets/images/rui_alias.png)
 
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image2.png "image_tooltip")
-
-
- 
 
 Está conformado por un “aliasTemplate” y un “aliasDomain” opcional
 
@@ -324,10 +315,8 @@ En este caso, pueden darse las siguientes 3 situaciones diferentes:
 
 ** **
 
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
-
-![alt_text](images/image3.png "image_tooltip")
+![](../../assets/images/proceso_register_cvu_exitoso.png)
 
 
 ** **
@@ -370,6 +359,7 @@ En este caso, pueden darse las siguientes 3 situaciones diferentes:
 
 <p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
+![](../../assets/images/proceso_register_cvu.png)
 
 ![alt_text](images/image4.png "image_tooltip")
 
