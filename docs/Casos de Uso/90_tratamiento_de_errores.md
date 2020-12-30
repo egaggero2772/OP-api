@@ -5,7 +5,7 @@
 
 
 
-![](../assets/images/secuencias_tratamiento_de_errores_por_componente.png)
+![](../../assets/images/secuencias_tratamiento_de_errores_por_componente.png)
 
 
 **Ante la falta de respuesta (Time Out), o la respuesta de un estado pendiente se recomienda inmediatamente accionar con el Get Transaction correspondiente y por intervalos de 5/10 segundos hasta obtener un estado final de transacción.**
@@ -167,5 +167,5 @@ Se aclara especialmente este punto dado que no se devuelve una colección o arra
 
 
 
-![alt_text](../assets/images/tabla_de_codigos_de_error_1.png)
-![alt_text](../assets/images/tabla_de_codigos_de_error_2.png)
+![alt_text](../../assets/images/tabla_de_codigos_de_error_1.png)
+![alt_text](../../assets/images/tabla_de_codigos_de_error_2.png)
