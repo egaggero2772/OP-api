@@ -31,7 +31,7 @@ Debido a que la Plataforma OpenPass se encuentra en constante evolución, ya sea
 Podrán observarse los métodos utilizados por la plataforma para el pago de servicios buscando los endpoints correspondientes a “**_/sales/billPaymen_**t”
 
  
-![](../assets/images/billPayer_payer_service.png)
+![](../../assets/images/billPayer_payer_service.png)
 
 
 Resumen
@@ -186,31 +186,22 @@ Además del objeto _BillCompany_ también se devuelve el objeto _BillCategory_ d
 **_<span style="text-decoration:underline;">Diagramas de Flujo</span>_**
 
 
+![](../../assets/images/caso_con_una_unica_factura.png)
 
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image2.png "image_tooltip")
 
 
 En este caso, al no encontrarse ninguna factura a abonar, se deberá ajustar la UX/UI para informarle al cliente que no tiene facturas para abonar o que no se han encontrado facturas a abonar. 
 
 
 
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image3.png "image_tooltip")
+![](../../assets/images/caso_sin_facturas.png)
 
 
 Dentro del "Proceso de selección de factura a abonar" se debe contemplar las diferentes posibilidades según lo detallado previamente (Múltiples Facturas, Pago Parcial, etc)
 
 
+![](../../assets/images/caso_con_multiples_facturas.png)
 
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image4.png "image_tooltip")
 
 
 Dentro del "Proceso de selección de factura a abonar" se debe contemplar las diferentes posibilidades según lo detallado previamente (Múltiples Facturas, Pago Parcial, etc)
