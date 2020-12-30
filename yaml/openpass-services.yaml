@@ -1,0 +1,2854 @@
+openapi: 3.0.1
+info:
+  title: BHub Platform Services Api
+  description: Access backoffice functions of the BHub platform
+  contact:
+    email: it@openpass.com.ar
+  license:
+    name: Openpass
+    url: https://www.openpass.com.ar
+  version: 1.0.3
+servers:
+- url: https://dev.openpass.com.ar/bhubApi/1.0.0/
+security:
+- ApiKeyAuth: []
+tags:
+- name: Products
+- name: Register
+  description: |-
+    El método register es el encargado de crear las cuentas de los usuarios finales, comunmente denominada billetera / wallet.
+    Otro uso segun la implementación es la creación de las cuentas de comercios , denominados usuarios comerciales.
+- name: Address Resources
+- name: Resources
+  description: Objetos auxiliares
+paths:
+  /login:
+    post:
+      tags:
+      - Authentification
+      summary: Get Login Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginAuth'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/integration-post'
+  /me:
+    get:
+      tags:
+      - Users & Applications
+      summary: Logged user info detail
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+    put:
+      tags:
+      - Users & Applications
+      summary: Modify user info
+      description: Modify user info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationUser'
+        required: true
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: applicationUser
+  /me/address:
+    put:
+      tags:
+      - Users & Applications
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+            examples:
+              AddressObj:
+                $ref: '#/components/examples/RequestBody-PUT-me-address-AddressObj'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /my-account:
+    get:
+      tags:
+      - Users & Applications
+      summary: Get details of My Account Holder
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+    put:
+      tags:
+      - Users & Applications
+      summary: Modify My Account Holder
+      description: Modify Account Holder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+        required: true
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: account
+  /my-account/users:
+    get:
+      tags:
+      - Users & Applications
+      summary: Get all users for logged account
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+    post:
+      tags:
+      - Users & Applications
+      summary: Add user to account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationUser'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: applicationUser
+  /my-account/users/{id}:
+    put:
+      tags:
+      - Users & Applications
+      summary: Modify application user
+      description: Modify a application user of account
+      parameters:
+      - name: id
+        in: path
+        description: Id of ApplicationUser
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationUser'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: applicationUser
+  /my-account/user-groups:
+    get:
+      tags:
+      - Users & Applications
+      summary: Get available user groups for account
+      description: User groups, are permission roles for each users. Each account,
+        has a users groups avaiable, to assign to each users for account. This grups,
+        has differents permissions.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserGroup'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /account/comercialAccount/register:
+    post:
+      tags:
+      - Register
+      summary: Register new comecial account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComercialAccountRegister'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /account/comercialAccount/{AccountId}/register:
+    post:
+      tags:
+      - Register
+      summary: Register new comecial account
+      parameters:
+      - name: AccountId
+        in: path
+        description: Id of Account
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComercialAccountRegister'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /account/finalConsumerAccount/register:
+    post:
+      tags:
+      - Register
+      summary: Register new final consumer account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationUser'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /account/finalConsumerAccount/{AccountId}/register:
+    post:
+      tags:
+      - Register
+      summary: Register new final consumer account
+      parameters:
+      - name: AccountId
+        in: path
+        description: Id of Account
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /products:
+    get:
+      tags:
+      - Products
+      summary: All Products available
+      description: Return the products available
+      parameters:
+      - name: code
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: productCategoryId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+    post:
+      tags:
+      - Products
+      summary: Add a product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: false
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: product
+  /product/{id}:
+    get:
+      tags:
+      - Products
+      summary: Product by Id
+      parameters:
+      - name: id
+        in: path
+        description: Id of product
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+    put:
+      tags:
+      - Products
+      summary: Modify a product
+      parameters:
+      - name: id
+        in: path
+        description: Id of product
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /tributaryInfo/tributaryIdentificationTypes:
+    get:
+      tags:
+      - Resources
+      summary: Tributary identifitacion types
+      description: Return all availables tributary identification types
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TributaryIdentificationType'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /tributaryInfo/tributaryConditions:
+    get:
+      tags:
+      - Resources
+      summary: Tributary conditions
+      description: Return all availables tributary conditions
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TributaryCondition'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /account/comercialTypes:
+    get:
+      tags:
+      - Resources
+      summary: Commerce types
+      description: Return all availables account commerce type
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComercialType'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /account/comercialType/{comercialTypeId}:
+    get:
+      tags:
+      - Resources
+      summary: Commerce types
+      description: Return a commerce type by id
+      parameters:
+      - name: comercialTypeId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComercialType'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/countries:
+    get:
+      tags:
+      - Address Resources
+      summary: Available countries
+      description: Return all availables country
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/reverse-geolocation:
+    post:
+      tags:
+      - Address Resources
+      summary: Get Address location by geolocation object
+      description: Get Address location by geolocation object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeoCoordinates'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+      x-codegen-request-body-name: GeoCoordinates
+  /address/country/{countryId}:
+    get:
+      tags:
+      - Address Resources
+      description: Return available country
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Country'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/country/{countryId}/provinces:
+    get:
+      tags:
+      - Address Resources
+      summary: Available province for country
+      description: Return all availables provinces for a country
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Province'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/country/{countryId}/province/{provinceId}:
+    get:
+      tags:
+      - Address Resources
+      description: Return available province
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: provinceId
+        in: path
+        description: Id of Province
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Province'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/country/{countryId}/province/{provinceId}/cities:
+    get:
+      tags:
+      - Address Resources
+      summary: Available citie for province
+      description: Return all availables cities for a province
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: provinceId
+        in: path
+        description: Id of Province
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/City'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/country/{countryId}/province/{provinceId}/city/{cityId}:
+    get:
+      tags:
+      - Address Resources
+      description: Return available city
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: provinceId
+        in: path
+        description: Id of District
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: cityId
+        in: path
+        description: Id of City
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/country/{countryId}/province/{provinceId}/city/{cityId}/districts:
+    get:
+      tags:
+      - Address Resources
+      summary: Available districts for city
+      description: Return all availables cities for a province
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: provinceId
+        in: path
+        description: Id of Province
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: cityId
+        in: path
+        description: Id of City
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/District'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /address/country/{countryId}/province/{provinceId}/city/{cityId}/district/{districtId}:
+    get:
+      tags:
+      - Address Resources
+      description: Return available district
+      parameters:
+      - name: countryId
+        in: path
+        description: Id of Country
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: provinceId
+        in: path
+        description: Id of Province
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: cityId
+        in: path
+        description: Id of City
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: districtId
+        in: path
+        description: Id of District
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/District'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /webhook/endpoint:
+    post:
+      tags:
+      - Webhooks
+      summary: Generate a new endpoint subscription to receive events through webhooks
+      description: Generate a new endpoint subscription to receive events through
+        webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscription'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /webhook/endpoint/{id}:
+    get:
+      tags:
+      - Webhooks
+      summary: Get a webhook endpoint subscription
+      description: Get a webhook endpoint subscription
+      parameters:
+      - name: id
+        in: path
+        description: Id of endpoint
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+    put:
+      tags:
+      - Webhooks
+      summary: Modify a webhook endpoint subscription
+      description: Modify a webhook endpoint subscription
+      parameters:
+      - name: id
+        in: path
+        description: Id of ApplicationUser
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscription'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /webhook/endpoint/{id}/test-endpoint:
+    post:
+      tags:
+      - Webhooks
+      summary: Send a webhook test, specifying a body request
+      description: Send a webhook test, specifying a body request
+      parameters:
+      - name: id
+        in: path
+        description: Id of endpoint
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example: {}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventTask'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /webhook/endpoint/{id}/events:
+    get:
+      tags:
+      - Webhooks
+      summary: Return a list of task events for a webhook subscription
+      description: Return a list of task events for a webhook subscription
+      parameters:
+      - name: id
+        in: path
+        description: Id of endpoint
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: beginDate
+        in: query
+        description: Begin date events
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      - name: endDate
+        in: query
+        description: End date events
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventTask'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /webhook/endpoint/{id}/events/{eventTaskId}:
+    get:
+      tags:
+      - Webhooks
+      summary: Return a eventTask
+      description: Return a eventTask
+      parameters:
+      - name: id
+        in: path
+        description: Id of endpoint
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: eventTaskId
+        in: path
+        description: Id of event task
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventTask'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /webhook/endpoint/{id}/event/{eventTaskId}/test-dispatch:
+    post:
+      tags:
+      - Webhooks
+      summary: This is just a test. Immediately and synchronously with this call,
+        the webhook will be sent to the endpoint of the subscription
+      description: This is just a test. Immediately and synchronously with this call,
+        the webhook will be sent to the endpoint of the subscription
+      parameters:
+      - name: id
+        in: path
+        description: Id of endpoint
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: eventTaskId
+        in: path
+        description: Id of event task
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventTask'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /webhook/endpoints:
+    get:
+      tags:
+      - Webhooks
+      summary: Return a list of endpoints subscriptions for my account
+      description: Return a list of endpoints subscriptions
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookSubscription'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+      x-codegen-request-body-name: login
+  /BankServices/Subscribe:
+    post:
+      tags:
+      - Webhooks
+      parameters:
+      - name: callbackUrl
+        in: header
+        description: suscriptor
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: https://recieverUrl.host
+      - name: event
+        in: header
+        description: eventType suscription
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: bankService.bankTransfer.created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+      responses:
+        "200":
+          description: OK
+      callbacks:
+        subtype1:
+          bankService.bankTransfer.created:
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/callbackMessage1'
+              responses:
+                "200":
+                  description: OK
+          bankService.bankTransfer.deleted:
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/callbackMessage2'
+              responses:
+                "200":
+                  description: OK
+          bankService.bankTransfer.modified:
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/callbackMessage3'
+              responses:
+                "200":
+                  description: OK
+        subtype2:
+          bankService.bankTransfer.created:
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/callbackMessage1'
+              responses:
+                "200":
+                  description: OK
+          bankService.bankTransfer.deleted:
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/callbackMessage2'
+              responses:
+                "200":
+                  description: OK
+          bankService.bankTransfer.modified:
+            post:
+              requestBody:
+                $ref: '#/components/requestBodies/callbackMessage3'
+              responses:
+                "200":
+                  description: OK
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 08807302-4b63-4868-8125-74e9837c7ab0
+        when_occurred:
+          type: integer
+          example: 123456789
+        created:
+          type: string
+          example: '2020 - 10 - 05T11: 05: 46 - 03: 00'
+        retries:
+          type: number
+          example: 34
+        attempt_count:
+          type: number
+          example: 34
+        applicationUserId:
+          type: string
+          example: 4894000F22E13662AFF8
+        accountId:
+          type: string
+          example: 4894000F22E13662AFF8
+        channel:
+          type: string
+          example: General
+        type:
+          type: string
+          example: bankService.bankTransfer.created
+        state:
+          type: string
+          example: send_failed_pemanently
+        data:
+          type: object
+          example:
+            id: 4894000F22E13662AFF8
+            number: 675870849
+            created: '2020 - 10 - 05T11: 05: 46 - 03: 00'
+            'confirmationDate ': ' 2020 - 10 - 05T11: 05: 48 - 03: 00'
+            'amount ': 10.0
+            description: Transferencia Bancaria Egreso - 675870849
+            state: approved
+            stateDetail:
+              message: Confirmada
+              transactionType: BankOutputTransfer
+            transactionType: BankOutputTransfer
+            clientTransactionId: 99a0f5cc - a836 - 4a19 - bf3f - f0d59e15e502
+            confirmationId: 1 - 30572975831 - 015114433092974 - 0
+            transactionData:
+              id: 4E66000F22E21CAE8DE7
+              className: TransferOuterData
+              destination:
+                label: bibank.api
+    LoginAuth:
+      required:
+      - userId
+      - userPassword
+      type: object
+      properties:
+        userId:
+          type: string
+        userPassword:
+          type: string
+    AuthToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: 76A3D72939F1DE921B36C33FBC3FE150
+        lifetime:
+          type: number
+          description: Lifetime seconds
+          example: 1800.0
+        needChangePassword:
+          type: boolean
+          description: This token need change User password validation
+          example: false
+    ApplicationUser:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 7CD008734CB91C54A100
+        enable:
+          type: boolean
+          example: true
+        userId:
+          type: string
+          example: rperez
+        firstName:
+          type: string
+          example: Roberto
+        lastName:
+          type: string
+          example: Gomez
+        userEmail:
+          type: string
+          example: rperez@gmail.com
+        userEmailVerified:
+          type: boolean
+          example: true
+        phone:
+          type: string
+          example: "541112344455"
+        phoneVerified:
+          type: boolean
+          example: true
+        birthDate:
+          type: string
+          format: date-time
+        identificationNumber:
+          type: string
+          example: "30234443"
+        gender:
+          $ref: '#/components/schemas/GenderType'
+        identificationNumberType:
+          $ref: '#/components/schemas/IdentificationType'
+        identificationVerified:
+          type: boolean
+          example: true
+        avatarUrl:
+          type: string
+          example: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQruPhEXVOoNPNPamKSV9ylPR31gg8GGfnjffm2-sgtCjnajtXGnA
+        userGroup:
+          $ref: '#/components/schemas/UserGroup'
+        verified:
+          type: boolean
+          readOnly: true
+          example: true
+        firstLogin:
+          type: boolean
+          readOnly: true
+          example: false
+        tributaryInfo:
+          $ref: '#/components/schemas/TributaryInfo'
+        address:
+          $ref: '#/components/schemas/Address'
+        accountsRelations:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/ApplicationUserAccountRelation'
+      description: User application
+    ApplicationUserAccountRelation:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account id
+          readOnly: true
+          example: 7CD008734CB91C54A100
+        relationType:
+          $ref: '#/components/schemas/AccountRelationType'
+      description: Indicates the type of relationship between an applicationuser and
+        an account
+    AccountRelationType:
+      type: string
+      enum:
+      - holder
+      - joint
+      - authorized
+    GenderType:
+      properties:
+        type:
+          type: string
+          example: female
+          enum:
+          - male
+          - female
+    UserGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 7CD008734CB91C54A100
+        name:
+          type: string
+          example: Empleado
+        description:
+          type: string
+          example: Permisos de empleado
+        principal:
+          type: boolean
+          example: true
+      description: User role group
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 7CD008734CB91C54A100
+        formatted:
+          type: string
+          description: Full mailing address, formatted for display or use on a mailing
+            label.
+        streetName:
+          type: string
+          example: Suipacha
+        streetNumber:
+          type: string
+          example: "3244"
+        betweenStreet1:
+          type: string
+        betweenStreet2:
+          type: string
+        blockName:
+          type: string
+        lotName:
+          type: string
+        postalCode:
+          type: string
+          example: C4452
+        district:
+          $ref: '#/components/schemas/District'
+        city:
+          $ref: '#/components/schemas/City'
+        province:
+          $ref: '#/components/schemas/Province'
+        country:
+          $ref: '#/components/schemas/Country'
+        geoLocation:
+          $ref: '#/components/schemas/GeoLocation'
+        externalGeolocationData:
+          $ref: '#/components/schemas/ExternalGeolocationData'
+      description: Address Object
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 7CD008734CB91C54A100
+        name:
+          type: string
+          example: Kiosko Flash
+        businessName:
+          type: string
+          example: Kiosko Oeste S.A.
+        accountNumber:
+          type: integer
+          example: 49536
+        type:
+          type: string
+          enum:
+          - PointOfSale
+          - Reseller
+          - Platform
+          - EndUser
+        status:
+          type: string
+          enum:
+          - Open
+          - Pending
+          - Closed
+          - Suspended
+        commercialType:
+          $ref: '#/components/schemas/ComercialType'
+        tributaryInfo:
+          $ref: '#/components/schemas/TributaryInfo'
+        accountQualification:
+          $ref: '#/components/schemas/AccountQualification'
+        parentAccount:
+          $ref: '#/components/schemas/Account'
+        accountLevel:
+          type: integer
+          example: 4
+        verifiedAccount:
+          type: boolean
+          readOnly: true
+        accountMissingData:
+          type: boolean
+          readOnly: true
+        address:
+          $ref: '#/components/schemas/Address'
+        avatarUrl:
+          type: string
+          example: https://1.bp.blogspot.com/-Cw9-HvmmSI8/XJuWusCs2rI/AAAAAAAAIlA/GCP58NKq1_QIawuVFLwWaM5vYwFDq0PqgCPcBGAYYCw/s640/maxikiosco%2B22.jpg
+      description: Account Holder
+    Register:
+      required:
+      - user
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserRegister'
+    ComercialAccountRegister:
+      allOf:
+      - $ref: '#/components/schemas/Register'
+      - type: object
+        properties:
+          account:
+            $ref: '#/components/schemas/AccountRegister'
+    UserRegister:
+      required:
+      - email
+      - firstName
+      - identificationNumber
+      - lastName
+      - phone
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: User firstname
+          example: Roberto
+        lastName:
+          type: string
+          description: Lastname firstname
+          example: Gomez
+        username:
+          type: string
+          description: Login username
+          example: rgomez
+        birthDate:
+          type: string
+          format: date-time
+        email:
+          type: string
+          description: 'User email. This email will be validated as unique in the
+            entire platform '
+          example: robertogomez@gmail.com
+        emailVerified:
+          type: boolean
+          description: Indicates if the email is already validated
+          example: true
+        phone:
+          type: string
+          description: E.164 user phone. This phone will be validated as unique in
+            the entire platform
+          example: "541112344455"
+        phoneVerified:
+          type: boolean
+          description: Indicates if the phone is already validated
+          example: true
+        identificationNumber:
+          type: string
+          example: "30894444"
+        identificationIssuerNumber:
+          type: string
+          example: "774588458"
+        identificationNumberType:
+          $ref: '#/components/schemas/IdentificationType'
+        identificationVerified:
+          type: boolean
+          description: Indicates that the identification data was verified
+          example: true
+        tributaryInfo:
+          $ref: '#/components/schemas/TributaryInfo'
+        gender:
+          $ref: '#/components/schemas/GenderType'
+        address:
+          $ref: '#/components/schemas/Address'
+        avatarImageUrl:
+          type: string
+          description: Image source url
+        externalIdentity:
+          $ref: '#/components/schemas/ExternalIdentity'
+        userGroupId:
+          type: string
+          description: You can indicate the role you want the user to have to register
+    AccountRegister:
+      type: object
+      properties:
+        businessName:
+          type: string
+          example: Kiosko Oeste S.A.
+        description:
+          type: string
+          example: Kiosko La Esquina
+        tributaryInfo:
+          $ref: '#/components/schemas/TributaryInfo'
+        avatarImage:
+          type: string
+          description: Image bytes
+    ExternalIdentity:
+      type: object
+      properties:
+        identityProvider:
+          $ref: '#/components/schemas/IdentityProvider'
+        identityId:
+          type: string
+          description: User id on Identity Provider. Sub claim
+          example: c7b91381-a7b6-4af7-9b05-c39d405b856e
+        applicationId:
+          type: string
+          description: Client/Application identification on Idp provider
+          example: af0ifjsldkj
+      description: User definition on a Identity Provider
+    IdentityProvider:
+      type: string
+      enum:
+      - Cognito
+      - Auth0
+      - Firebase
+      - Google
+      - Facebook
+      - Microsoft
+      - Twitter
+      - Instagram
+      - IPSLocal
+      - Custom
+    ProductType:
+      type: string
+      enum:
+      - Recharge
+      - BillPayment
+      - PinCode
+      - Virtual
+      - Physical
+      - Transport
+      - Service
+      - Currency
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 7CD008734CB91C54A100
+        code:
+          type: string
+          description: Product code
+          example: "256"
+        skuCode:
+          type: string
+          description: Product BarCode
+          example: "5701234567899"
+        enable:
+          type: boolean
+          example: true
+        name:
+          type: string
+          description: The product’s name, meant to be displayable to the customer.
+            Applicable to both service and good types
+          example: DirecTV
+        smallDescription:
+          type: string
+          example: Recarga DirecTv
+        description:
+          type: string
+          example: IMPORTANTE - Para ingresar la operacion se debe utilizar el codigo
+            de  18  digitos de la tarjeta. Los montos de recarga permitidos son desde
+            $150 hasta $2000
+        productGroup:
+          $ref: '#/components/schemas/ProductGroup'
+        productType:
+          $ref: '#/components/schemas/ProductType'
+        vendor:
+          $ref: '#/components/schemas/Vendor'
+        maxDigits:
+          type: string
+          description: Max digits of transaction data
+          example: 0,10,10
+        initialValues:
+          type: string
+          description: Initialization value
+          example: "10"
+        minimium:
+          type: number
+          description: Minimium quantity available in a transaction
+          example: 150.0
+        maximium:
+          type: number
+          description: Maximium quantity available in a transaction
+          example: 2000.0
+        salePrice:
+          type: number
+          description: Product sale price
+          example: 270.0
+        fractionalAmount:
+          type: number
+          description: Amount for fractional block of quantity product
+          example: 10.0
+        imageUrl:
+          type: string
+          description: Image of product
+          example: https://cdn.telerecargas.com.ar/gvp/gv/externalFiles/dtv-logo.jpg
+        transactionDataLabel:
+          type: string
+          example: Ingrese numero medidor
+        transactionDataClassName:
+          type: string
+          description: Object class name of TransactionData
+          example: CodeData
+          enum:
+          - PhoneData
+          - CodeData
+          - BillPaymentData
+          - ParkingData
+          - PersonalData
+          - WithoutData
+          - PayoutData
+      description: Product
+    Vendor:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        code:
+          type: string
+          example: "000418"
+        name:
+          type: string
+          description: Name of Vendor
+          example: DirectTv
+        description:
+          type: string
+          example: DirecTv S.A.
+        imageUrl:
+          type: string
+          description: Vendor logo image url
+          example: gv/externalFiles/dtv-logo.jpg
+    ComercialType:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        code:
+          type: string
+          readOnly: true
+          example: "001"
+        name:
+          type: string
+          readOnly: true
+          example: Polirubro
+    AccountQualification:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        level:
+          type: string
+          description: Account qualification level code
+          example: "1"
+    TributaryInfo:
+      type: object
+      properties:
+        tributaryIdentificationType:
+          $ref: '#/components/schemas/TributaryIdentificationType'
+        tributaryIdentificationCode:
+          type: string
+          example: "27302545852"
+        tributaryCondition:
+          $ref: '#/components/schemas/TributaryCondition'
+    TributaryIdentificationType:
+      type: object
+      properties:
+        code:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        description:
+          type: string
+          readOnly: true
+          example: CUIT
+    TributaryCondition:
+      type: object
+      properties:
+        code:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        description:
+          type: string
+          readOnly: true
+          example: Monotributista
+    District:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        name:
+          type: string
+          readOnly: true
+          example: Lomas del Mirador
+    City:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        name:
+          type: string
+          readOnly: true
+          example: La Matanza
+    Province:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        name:
+          type: string
+          readOnly: true
+          example: Buenos Aires
+    Country:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        name:
+          type: string
+          readOnly: true
+          example: Argentina
+        isoCode:
+          type: string
+          readOnly: true
+          example: AR
+    GeoLocation:
+      type: object
+      properties:
+        manualCoordinates:
+          $ref: '#/components/schemas/GeoCoordinates'
+        geoCoordinates:
+          $ref: '#/components/schemas/GeoCoordinates'
+        updateGeoData:
+          type: boolean
+          description: Indicates that this object must be updated
+          example: false
+    GeoCoordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          description: Latitude in decimal format
+          example: -34.603722
+        longitude:
+          type: number
+          description: Longitude in decimal format
+          example: -58.381592
+        geoHash:
+          type: string
+          description: Geohash with 5 character precision
+          example: 67zth
+        locationType:
+          type: string
+          enum:
+          - approximate
+          - geometric_center
+          - range_interpolated
+          - rooftop
+          - unknown
+    ExternalGeolocationData:
+      type: object
+      properties:
+        provider:
+          type: string
+          description: Geolocation provider
+          example: GoogleMap
+        data:
+          type: string
+          description: Provider geolocation result data
+    ProductGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 3B26087384811DD52425
+        code:
+          type: string
+          example: Recharge
+        name:
+          type: string
+          example: Recargas
+        parentCategoryId:
+          type: string
+          example: Recargas
+        imageUrl:
+          type: string
+          example: https://cajavecina.gisgeoresearch.com/assets/images/icons/recargar_celular.png
+        description:
+          type: string
+          example: Productos de Recarga Virtuales
+    IdentificationType:
+      required:
+      - code
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: \3242k3872h3823nf23fnk2
+        name:
+          type: string
+          readOnly: true
+          example: DNI
+        code:
+          type: string
+          example: A3423
+        description:
+          type: string
+          readOnly: true
+          example: Documento Nacional de Identidad
+        minLenght:
+          type: integer
+          readOnly: true
+          example: 8
+        maxLenght:
+          type: integer
+          readOnly: true
+          example: 12
+    WebhookSubscription:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Id of account owner of Webhook subscription
+          example: 3B26087384811DD52425
+        applicationUserId:
+          type: string
+          description: Id of application user owner of webhook subscription. This
+            field can be empty, indicating that all the events of all the users belonging
+            to the account will arrive.
+          example: 3B26087384811DD52425
+        eventsHierarchical:
+          type: boolean
+          description: Indicates that this subscription will be able to receive events
+            produced by child accounts and users of the hierarchical tree of accounts.
+            You must have special permissions to enable this functionality.
+          example: true
+        endpointUrl:
+          type: string
+          example: https://yourwebhook.com/events/example
+        events:
+          type: array
+          description: List of events subscription
+          items:
+            type: string
+            example: transaction.bankTransferInput.confirmed
+        description:
+          type: string
+          example: This webhook is used for bankTransferOutput confirmed events
+        enable:
+          type: boolean
+          description: Indicate if this webhook subscription is enable
+          example: true
+    WebhookEventTask:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of webhook event task
+          example: 3B26087384811DD52425
+        date:
+          type: string
+          description: Event task date
+          format: date
+        subcriptionId:
+          type: string
+          description: Webhook endpoint subscription id
+          example: 3B26087384811DD52425
+        redelivered:
+          type: integer
+          description: Number of delivered webhook event task
+          example: 1
+        transmissionStateCode:
+          type: string
+          description: Transmission state of webhook event task
+          example: C
+        eventData:
+          type: string
+          description: Webhook event Data
+    GvpError:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Description of error code
+        data:
+          $ref: '#/components/schemas/GvpErrorDescription'
+    GvpErrorDescription:
+      type: object
+      properties:
+        messageText:
+          type: string
+        errorCode:
+          type: number
+        errortype:
+          type: string
+    body:
+      type: object
+      properties:
+        inProgressUrl:
+          type: string
+        failedUrl:
+          type: string
+        successUrl:
+          type: string
+  parameters:
+    callbackUrl:
+      name: callbackUrl
+      in: header
+      description: suscriptor
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: https://recieverUrl.host
+    event:
+      name: event
+      in: header
+      description: eventType suscription
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: bankService.bankTransfer.created
+    startIndex:
+      name: startIndex
+      in: query
+      description: Integer from start result
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+        default: 0
+    limitIndex:
+      name: limitIndex
+      in: query
+      description: Limit count of result
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+        default: 20
+    id:
+      name: id
+      in: path
+      description: ObjectId
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    beginDate:
+      name: begin_date
+      in: query
+      description: Begin date balance
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date-time
+    endDate:
+      name: end_date
+      in: query
+      description: End date balance
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date-time
+    transactionSource:
+      name: transaction_source
+      in: query
+      description: Type of Transaction Source
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - sale
+        - payment
+        - transferDebit
+        - transferCredit
+    direction:
+      name: direction
+      in: query
+      description: Monetary direction
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - debit
+        - credit
+    movementType:
+      name: movement_type
+      in: query
+      description: Type of movement
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - commission
+        - settlement
+        - monetary
+        - inventory
+  examples:
+    RequestBody-PUT-me-address-AddressObj:
+      value:
+        address:
+          formatted: string
+          streetName: Suipacha
+          streetNumber: "3244"
+          betweenStreet1: string
+          betweenStreet2: string
+          blockName: string
+          lotName: string
+          postalCode: C4452
+          district: {}
+          city: {}
+          province: {}
+          country: {}
+          geoLocation:
+            manualCoordinates:
+              latitude: -34.603722
+              longitude: -58.381592
+              geoHash: 67zth
+              locationType: approximate
+            geoCoordinates:
+              latitude: -34.603722
+              longitude: -58.381592
+              geoHash: 67zth
+              locationType: approximate
+            updateGeoData: false
+          externalGeolocationData:
+            provider: GoogleMap
+            data:
+              results:
+              - address_components:
+                - long_name: "1819"
+                  short_name: "1819"
+                  types:
+                  - street_number
+                - long_name: Godoy Cruz
+                  short_name: Godoy Cruz
+                  types:
+                  - route
+                - long_name: CYM
+                  short_name: CYM
+                  types:
+                  - locality
+                  - political
+                - long_name: Comuna 14
+                  short_name: Comuna 14
+                  types:
+                  - administrative_area_level_2
+                  - political
+                - long_name: Buenos Aires
+                  short_name: CABA
+                  types:
+                  - administrative_area_level_1
+                  - political
+                - long_name: Argentina
+                  short_name: AR
+                  types:
+                  - country
+                  - political
+                - long_name: C1414
+                  short_name: C1414
+                  types:
+                  - postal_code
+                formatted_address: Godoy Cruz 1819, C1414 CYM, Buenos Aires, Argentina
+                geometry:
+                  location:
+                    lat: -34.5868155
+                    lng: -58.4325713
+                  location_type: ROOFTOP
+                  viewport:
+                    northeast:
+                      lat: -34.5854665197085
+                      lng: -58.4312223197085
+                    southwest:
+                      lat: -34.5881644802915
+                      lng: -58.4339202802915
+                place_id: ChIJU7jNyI61vJURqk6hUXjDaXU
+                plus_code:
+                  compound_code: CH78+7X Buenos Aires, Argentina
+                  global_code: 48Q3CH78+7X
+                types:
+                - establishment
+                - food
+                - point_of_interest
+                - restaurant
+              status: OK
+  requestBodies:
+    callbackMessage1:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Event'
+      required: true
+    callbackMessage2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginAuth'
+      required: true
+    callbackMessage3:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginAuth'
+      required: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: accessToken
+      in: header
+  x-amazon-apigateway-integrations:
+    integration-post:
+      type: http
+      uri: https://dev.openpass.com.ar/bhubApi/1.0.0/
+      httpMethod: POST
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
