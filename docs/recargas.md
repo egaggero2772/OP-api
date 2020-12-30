@@ -1,4 +1,4 @@
-# recargas
+# Recargas
 
 The beginning of an awesome article...
 <!-- Output copied to clipboard! -->
