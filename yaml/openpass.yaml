@@ -5195,6 +5195,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionReceipt'
+              examples:
+                Receipt / Ticket:
+                  $ref: '#/components/examples/Response-GET-SaleReceipt'
         "401":
           description: Unauthorized
           content:
@@ -11846,6 +11849,16 @@ components:
         aditionalData: []
         minAmount: 0.01
         maxAmount: 2000.0
+    Response-GET-SaleReceipt:
+      value:
+        receiptString: "            TELECOM\r\n-------------------------------\r\n\
+          \  Fecha: 14/01/2021  12:04:47\r\n-------------------------------\r\nTransaccion:\
+          \ 399774             \r\nAgencia: 27154                  \r\nWILLIAMSON,\
+          \ MACY                \r\n                                \r\n-------------------------------\r\
+          \n         Pago Servicio\r\nEmpresa: Personal Pay\r\nImporte: 10,00  (ARS)\r\
+          \n-------------------------------\r\nBANCO DEL SOL\r\nIdentificacion: 00000000056734419003\r\
+          \nDetalle: \r\nCB: 00000000000123804900000000005673441900302020052700000000665202006010000000066503502\r\
+          \nEstado: Pendiente\r\n-------------------------------\r\n\r\n"
     Response-PUT-Me-Phone:
       value:
         id: 7F560010D8AA279B7EB7
@@ -12192,7 +12205,7 @@ components:
           code: "11090"
         billMode:
           id: "64595186223400040394"
-          //"name": COBRANZA DE PRESTAMOS X DNI
+          name: COBRANZA DE PRESTAMOS X DNI
         parameters:
         - id: C11
           value: "12414082"
