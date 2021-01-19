@@ -1,4 +1,4 @@
-# Pago de Servicios
+# Pago de Facturas
 
 Objetivo
 
@@ -114,17 +114,11 @@ Toda esta información puede utilizarse para la confección de un formulario en 
 
 Además del objeto _BillCompany_ también se devuelve el objeto _BillCategory_ dentro del cual se puede encontrar la información de la Categoría (o Rubro) a la cual pertenece la Empresa. En caso de querer agrupar las Compañías receptoras de pago por Categoría, se deberá tomar la información desde este objeto.
 
-Dado que la cantidad de Compañías receptoras de pago puede ser voluminosa, una buena práctica/recomendación sería cachear toda esta información para luego poder utilizarla desde el caché y mejorar la performances y la UX. \
- \
+Dado que la cantidad de Compañías receptoras de pago puede ser voluminosa, una buena práctica/recomendación sería cachear toda esta información para luego poder utilizarla desde el caché y mejorar la performances y la UX.
+
 2. Búsqueda por Lectura de Código de Barras.
 
-** **
-
- 
-
 Este servicio permitirá, mediante la lectura de Código de Barra, obtener una lista de facturas a abonar. La lista a obtener puede ser de cero, uno o “n” casos dependiendo siempre de la Empresa a abonar y el Proveedor por el cual se está transaccionando. 
-
- 
 
 Es importante aclarar, que no todas las empresas tienen el tipo de cobranza rápida por medio de un código de barra, en caso de no obtener un resultado se podrá ir por el flujo de buscar la empresa previamente.
 

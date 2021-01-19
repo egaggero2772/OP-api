@@ -404,6 +404,3 @@ En este caso, pueden darse las siguientes 3 situaciones diferentes:
 
 ![alt_text](images/image5.png "image_tooltip")
 
-# register_cvu
-
-The beginning of an awesome article...
