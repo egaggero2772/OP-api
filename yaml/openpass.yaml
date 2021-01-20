@@ -7,7 +7,7 @@ info:
   license:
     name: Openpass©
     url: https://www.openpass.com.ar
-  version: 1.0.0
+  version: 1.0.1
 servers:
 - url: https://dev.openpass.com.ar/bhubApi/1.0.0/
 security:
@@ -1459,7 +1459,7 @@ paths:
   /financial-account/prepaid-account/{prepaidAccountId}/add-funds:
     post:
       tags:
-      - Financial Account
+      - Financial Prepaid Account
       summary: Add funds to a prepaid financial account
       parameters:
       - name: applicationId
@@ -1609,6 +1609,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Financial Account:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountWithID'
         "401":
           description: Unauthorized
           content:
@@ -1680,6 +1683,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceSummary'
+              examples:
+                Financial Account Balance:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountID-BalanceDetail'
         "401":
           description: Unauthorized
           content:
@@ -1794,9 +1800,10 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FinancialMovement'
+                $ref: '#/components/schemas/FinancialMovement'
+              examples:
+                Financial Movements:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountIDMovements'
         "401":
           description: Unauthorized
           content:
@@ -1858,6 +1865,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FinancialMovement'
+              examples:
+                Financial Movement:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountIDMovementsMovementID'
         "401":
           description: Unauthorized
           content:
@@ -1902,9 +1912,106 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FinancialAccount'
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Financial Accounts:
+                  $ref: '#/components/examples/Response-GET-FinancialAccounts'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-accounts/availables-accounts:
+    get:
+      tags:
+      - Financial Account
+      summary: Get all Availables Financial accounts
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Availables Accounts:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountsAvailablesAccounts'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-accounts/concertation-accounts:
+    get:
+      tags:
+      - Financial Account
+      summary: Get all Availables Concertation accounts
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Concertation Accounts:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountsConcertationAccounts'
         "401":
           description: Unauthorized
           content:
@@ -1926,7 +2033,7 @@ paths:
   /financial-accounts/prepaid-accounts:
     get:
       tags:
-      - Financial Account
+      - Financial Prepaid Account
       summary: Get all PrePaid Financial account
       parameters:
       - name: applicationId
@@ -1952,6 +2059,229 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FinancialAccount'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-accounts/saving-accounts:
+    get:
+      tags:
+      - Financial Saving Account
+      summary: By default this method returns all enable saving accounts, with query
+        params in "false", will return all disabled/closed saving accounts.
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: enable
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Saving Accounts:
+                  $ref: '#/components/examples/Response-GET-SavingAccounts'
+                With query params ( ?enable=false ):
+                  $ref: '#/components/examples/Response-GET-DisableSavingAccounts'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-account/saving-account:
+    post:
+      tags:
+      - Financial Saving Account
+      summary: Create a saving account
+      description: Create a saving account
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/FinancialAccountSavingRequest'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Saving Account:
+                  $ref: '#/components/examples/Response-POST-SavingAccount'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-account/saving-account/{financialAccountId}/close:
+    post:
+      tags:
+      - Financial Saving Account
+      summary: Close/Disable saving account
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: financialAccountId
+        in: path
+        description: Id of Financial Account
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Closed Financial Saving Account:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountWithIDClose'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-accounts/saving-accounts/{financialAccountId}:
+    put:
+      tags:
+      - Financial Saving Account
+      summary: Create a saving account
+      description: Create a saving account
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: financialAccountId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/FinancialAccountSavingRequest'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinancialAccount'
+              examples:
+                Saving Account:
+                  $ref: '#/components/examples/Response-POST-SavingAccount'
         "401":
           description: Unauthorized
           content:
@@ -8350,6 +8680,10 @@ components:
     FinancialAccount:
       type: object
       properties:
+        className:
+          type: string
+          description: Object classname
+          example: FinancialAccount
         availableCredit:
           type: number
           description: Available amount for this financial Account.
@@ -8368,6 +8702,9 @@ components:
         isDefault:
           type: boolean
           example: true
+        enable:
+          type: boolean
+          example: true
         name:
           type: string
           example: Virtual
@@ -8380,6 +8717,36 @@ components:
           description: Total amount of pending balance to accredit
           example: 100
       description: Financial Account
+    FinancialProductAccount:
+      allOf:
+      - $ref: '#/components/schemas/FinancialAccount'
+      - properties:
+          product:
+            $ref: '#/components/schemas/Product'
+    FinancialSavingAccount:
+      allOf:
+      - $ref: '#/components/schemas/FinancialProductAccount'
+      - properties:
+          creationDate:
+            type: string
+            description: Start date of balance summary
+            example: 2019-05-02
+          closeDate:
+            type: string
+            description: Start date of balance summary
+            example: 2019-05-02
+    FinancialAvailableAccount:
+      allOf:
+      - $ref: '#/components/schemas/FinancialProductAccount'
+    FinancialConcertationAccount:
+      allOf:
+      - $ref: '#/components/schemas/FinancialAccount'
+    FinancialSavingAccountRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          example: Mi cuenta descripcion
     FinancialMovement:
       allOf:
       - $ref: '#/components/schemas/Transaction'
@@ -9299,6 +9666,7 @@ components:
       - P2pInputTransfer
       - BankOutputTransfer
       - BankInputTransfer
+      - InternalProductTransfer
     TransactionalActivity:
       allOf:
       - $ref: '#/components/schemas/Activity'
@@ -9344,9 +9712,15 @@ components:
           destination:
             type: string
             description: Financial account destination ID of transfer
+          destinationDescription:
+            type: string
+            description: Description of financialAccount destination
           origin:
             type: string
             description: Financial account origin ID of transfer
+          originDescription:
+            type: string
+            description: Description of financialAccount origin
     TransferPtpInnerData:
       allOf:
       - $ref: '#/components/schemas/TransferInnerData'
@@ -12209,7 +12583,308 @@ components:
         parameters:
         - id: C11
           value: "12414082"
+    Response-POST-SavingAccount:
+      value:
+        className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a-PX7DtmNKn-TjbcPsqfLrA
+        name: Nueva cuenta de ahorro
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:42:15-03:00
+    Response-GET-SavingAccounts:
+      value:
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a-PX7DtmNKn-TjbcPsqfLrA
+        name: Ahorros Bicicleta
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 50.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:42:15-03:00
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsp68lRvviEQE1ho-wYmKVjZrh9db7uj8yA
+        name: Caja de ahorro 2
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:44:02-03:00
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsp68lRvviEQE1ho-wYmKVjZrh9db7uj8zA
+        name: Ahorros Escuela
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 120.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:59:54-03:00
+    Response-GET-DisableSavingAccounts:
+      value:
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsp68lRvviEQE1ho-wYmKVjZrh9db7uj8yA
+        name: Ahorro jorge
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: false
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T08:26:23-03:00
+        closeDate: 2021-01-19T08:28:02-03:00
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsp68lRvviEQE1ho-wYmKVjZrh9db7uj8yA
+        name: Mi super ahorro
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: false
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T12:43:17-03:00
+        closeDate: 2021-01-19T14:08:01-03:00
+    Response-GET-FinancialAccountWithIDClose:
+      value:
+        className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a3NRVUlArB-dR8pPKPCaeVQ
+        name: nueva caja
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0.0
+        arrangedAmount: 0.0
+        overdraftCredit: 0.0
+        availableCredit: 0.0
+        enable: false
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-20T12:21:05-03:00
+        closeDate: 2021-01-20T12:24:59-03:00
+    Response-GET-FinancialAccountWithID:
+      value:
+        className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a3NRVUlArB-dR8pPKPCaeVQ
+        name: Nombre de caja de ahorro
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: false
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T12:31:58-03:00
+        closeDate: 2021-01-19T14:09:12-03:00
+    Response-GET-FinancialAccounts:
+      value:
+      - className: FinancialAvailableAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsp68lRvviEQE1ho-wYmKVjZrh9db7uj8yA
+        name: Disponible
+        description: Pesos Argentinos
+        isDefault: true
+        balanceAmount: 1757.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a-PX7DtmNKn-TjbcPsqfLrA
+        name: Ahorros Bicicleta
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 50.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:42:15-03:00
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a3NRVUlArB-dR8pPKPCaeVQ
+        name: Caja de ahorro 2
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 0.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:44:02-03:00
+      - className: FinancialSavingAccount
+        id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsp68lRvviQXA1ho-wYmKVjZht4db7uj8yA
+        name: Ahorros Escuela
+        description: Pesos Argentinos
+        isDefault: false
+        balanceAmount: 120.0
+        arrangedAmount: 0
+        overdraftCredit: 0
+        availableCredit: 0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
+        creationDate: 2021-01-19T14:59:54-03:00
+    Response-GET-FinancialAccountIDMovements:
+      value:
+      - id: 0A85000FE5B821D49EA0
+        created: 2021-01-20T13:12:48-03:00
+        confirmationDate: 2021-01-20T13:12:48-03:00
+        amount: -4.14
+        description: 'Transferencia interna Producto - 400833 - '
+        comments: Hola
+        state: approved
+        stateDetail:
+          message: Confirmada
+          transactionType: Sale
+        transactionType: Sale
+        movementSubType: GrossAmount
+        TransactionType: InternalProductTransfer
+      - id: 0A85000FEB0A07639E19
+        created: 2021-01-20T13:09:33-03:00
+        confirmationDate: 2021-01-20T13:09:33-03:00
+        amount: -5.0
+        description: 'Transferencia interna Producto - 400831 - '
+        comments: Comentario
+        state: approved
+        stateDetail:
+          message: Confirmada
+          transactionType: Sale
+        transactionType: Sale
+        movementSubType: GrossAmount
+        TransactionType: InternalProductTransfer
+      - id: 0A85000F7FEB01BD9112
+        created: 2021-01-20T12:40:41-03:00
+        confirmationDate: 2021-01-20T12:40:41-03:00
+        amount: -5.0
+        description: 'Transferencia interna Producto - 400828 - '
+        comments: Testing
+        state: approved
+        stateDetail:
+          message: Confirmada
+          transactionType: Sale
+        transactionType: Sale
+        movementSubType: GrossAmount
+        TransactionType: InternalProductTransfer
+      - id: 5084000F35C62281DDF8
+        created: 2021-01-20T12:02:09-03:00
+        confirmationDate: 2021-01-20T12:02:09-03:00
+        amount: 4416.0
+        description: 'Transferencia Ingreso PtP - 400819 - '
+        comments: Bruto
+        state: approved
+        stateDetail:
+          message: Confirmada
+          transactionType: Sale
+        transactionType: Sale
+        movementSubType: GrossAmount
+        TransactionType: P2pInputTransfer
+    Response-GET-FinancialAccountIDMovementsMovementID:
+      value:
+        id: 0A85000FE5B821D49EA0
+        created: 2021-01-20T13:12:48-03:00
+        confirmationDate: 2021-01-20T13:12:48-03:00
+        amount: -4.14
+        description: 'Transferencia interna Producto - 400833 - '
+        comments: Bruto
+        state: approved
+        stateDetail:
+          message: Confirmada
+          transactionType: Sale
+        transactionType: Sale
+        movementSubType: GrossAmount
+        TransactionType: InternalProductTransfer
+    Response-GET-FinancialAccountID-BalanceDetail:
+      value:
+        beginDate: "20201129"
+        endDate: "20210120"
+        beginAmount: 0.0
+        endAmount: 4401.86
+        pendingAmount: 0.0
+        rejectedAmount: 0.0
+        balanceDetails:
+        - date: "20210120"
+          totalAmount: -4416.0
+          movementSubType: GrossAmount
+          transactionType: P2pInputTransfer
+          name: Transferencia Ingreso PtP
+          description: ""
+        - date: "20210120"
+          totalAmount: 16.14
+          movementSubType: GrossAmount
+          transactionType: InternalProductTransfer
+          name: Transferencia interna Producto
+          description: ""
+        - date: "20210120"
+          totalAmount: -2.0
+          movementSubType: GrossAmount
+          transactionType: InternalProductTransfer
+          name: Transferencia interna Producto
+          description: ""
+    Response-GET-FinancialAccountsAvailablesAccounts:
+      value: {}
+    Response-GET-FinancialAccountsConcertationAccounts:
+      value: {}
   requestBodies:
+    FinancialAccountSavingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FinancialSavingAccountRequest'
+      required: true
     ApplicationUser:
       content:
         application/json:
