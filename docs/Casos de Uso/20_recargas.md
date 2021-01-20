@@ -1,7 +1,7 @@
 # Recargas
 
 
-Introducción
+## Introducción
 
  
 
@@ -49,7 +49,7 @@ Lo que va a cambiar entre una Recarga y otra, son los datos particulares de cada
 
 Algo importante a tener en cuenta es que previo a llamar al método para realizar Recargas, es necesario identificar el Código de Producto al cual se le quiere realizar una recarga.
 
-La lista de Productos disponibles para poder realizarles recargas, se obtiene mediante el método:**_ _**
+La lista de Productos disponibles para poder realizarles recargas, se obtiene mediante el método:
 
 **_GET /sales/topup/products_**
 
