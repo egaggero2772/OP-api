@@ -15,6 +15,9 @@ security:
 tags:
 - name: Users & Applications
 - name: Financial Account
+- name: Financial Available Account
+- name: Financial Saving Account
+- name: Financial Prepaid Account
 - name: Products
 - name: Payments
 - name: Sales
@@ -1634,6 +1637,80 @@ paths:
     get:
       tags:
       - Financial Account
+      summary: Get FinancialAccount balance datails for differents filters
+      parameters:
+      - name: applicationId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: deviceId
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Id of Financial Account
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: beginDate
+        in: query
+        description: Begin date balance
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date balance
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceDetail'
+              examples:
+                Balance detail:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountID-BalanceDetail'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        "404":
+          description: The specified resource was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GvpError'
+  /financial-account/{id}/balance-summary:
+    get:
+      tags:
+      - Financial Account
       summary: Get FinancialAccount balance summary for differents filters
       parameters:
       - name: applicationId
@@ -1684,8 +1761,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceSummary'
               examples:
-                Financial Account Balance:
-                  $ref: '#/components/examples/Response-GET-FinancialAccountID-BalanceDetail'
+                Balance summary:
+                  $ref: '#/components/examples/Response-GET-FinancialAccountID-BalanceSummary'
         "401":
           description: Unauthorized
           content:
@@ -1934,10 +2011,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GvpError'
-  /financial-accounts/availables-accounts:
+  /financial-accounts/available-accounts:
     get:
       tags:
-      - Financial Account
+      - Financial Available Account
       summary: Get all Availables Financial accounts
       parameters:
       - name: applicationId
@@ -1962,7 +2039,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/FinancialAccount'
               examples:
-                Availables Accounts:
+                Available Accounts:
                   $ref: '#/components/examples/Response-GET-FinancialAccountsAvailablesAccounts'
         "401":
           description: Unauthorized
@@ -2186,7 +2263,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GvpError'
-  /financial-account/saving-account/{financialAccountId}/close:
+  /financial-account/saving-account/{id}/close:
     post:
       tags:
       - Financial Saving Account
@@ -2206,9 +2283,9 @@ paths:
         explode: false
         schema:
           type: string
-      - name: financialAccountId
+      - name: id
         in: path
-        description: Id of Financial Account
+        description: financialAccountId
         required: true
         style: simple
         explode: false
@@ -2242,11 +2319,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GvpError'
-  /financial-accounts/saving-accounts/{financialAccountId}:
+  /financial-account/saving-accounts/{id}:
     put:
       tags:
       - Financial Saving Account
-      summary: Create a saving account
+      summary: Update a saving account
       description: Create a saving account
       parameters:
       - name: applicationId
@@ -2263,8 +2340,9 @@ paths:
         explode: false
         schema:
           type: string
-      - name: financialAccountId
+      - name: id
         in: path
+        description: financialAccountId
         required: true
         style: simple
         explode: false
@@ -12588,7 +12666,7 @@ components:
         className: FinancialSavingAccount
         id: hwie7J7ssTbWy6ZhUM1w5DkX07lgCsi6MlSvUEya4nYbHe3PNFSOsn1mC85Koo8a-PX7DtmNKn-TjbcPsqfLrA
         name: Nueva cuenta de ahorro
-        description: Pesos Argentinos
+        description: Mi cuenta descripcion
         isDefault: false
         balanceAmount: 0
         arrangedAmount: 0
@@ -12875,9 +12953,32 @@ components:
           name: Transferencia interna Producto
           description: ""
     Response-GET-FinancialAccountsAvailablesAccounts:
-      value: {}
+      value:
+      - className: FinancialAvailableAccount
+        id: hwie7J7ssTbCUgK7T9wPgCN_1dsvOmbgMlSvUEya4nYbHe3PNFSOsp68lRvviEQEd3DcJhK2Pti4nftsLQ5Uig
+        name: Disponible
+        description: Pesos Argentinos
+        isDefault: true
+        balanceAmount: 0.0
+        arrangedAmount: 0.0
+        overdraftCredit: 0.0
+        availableCredit: 0.0
+        enable: true
+        product:
+          code: $
+          id: 05C940B841BB20A070FC
+          name: Pesos Argentinos
     Response-GET-FinancialAccountsConcertationAccounts:
       value: {}
+    Response-GET-FinancialAccountID-BalanceSummary:
+      value:
+        beginDate: "20210125"
+        endDate: "20210129"
+        beginAmount: 0.0
+        endAmount: 19647.0
+        pendingAmount: 0.0
+        rejectedAmount: 0.0
+        balanceDetails: []
   requestBodies:
     FinancialAccountSavingRequest:
       content:
